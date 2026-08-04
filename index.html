@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
+  <meta name="theme-color" content="#101827" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Tryout Scout" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <title>12U Tryout Scout</title>
+  <style>
+    :root{--bg:#08111f;--panel:#111d2d;--panel2:#17263a;--text:#f7f9fc;--muted:#9fb0c6;--line:#2b3c54;--accent:#4da3ff;--good:#31c48d;--warn:#f5b942;--bad:#ff5d6c;--purple:#a78bfa;--shadow:0 8px 30px rgba(0,0,0,.25)}
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent} body{margin:0;background:linear-gradient(180deg,#07101c,#0a1423 45%,#091321);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;min-height:100vh}
+    button,input,select,textarea{font:inherit} button{cursor:pointer}.app{max-width:760px;margin:0 auto;padding:env(safe-area-inset-top) 12px calc(90px + env(safe-area-inset-bottom))}
+    header{position:sticky;top:0;z-index:20;background:rgba(8,17,31,.94);backdrop-filter:blur(14px);padding:12px 0 10px;border-bottom:1px solid rgba(255,255,255,.06)}
+    .top{display:flex;align-items:center;gap:10px}.brand{font-size:20px;font-weight:850;letter-spacing:-.4px}.sub{font-size:12px;color:var(--muted)}.grow{flex:1}
+    .iconbtn,.btn{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:13px;min-height:44px;padding:10px 14px;font-weight:750}.iconbtn{width:44px;padding:0}.btn.primary{background:var(--accent);color:#06111f;border-color:transparent}.btn.danger{background:#401923;border-color:#6c2837}.btn.good{background:#153d33;border-color:#276a57}.btn.small{min-height:36px;padding:7px 10px;font-size:13px}
+    .tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}.tab{border:0;background:transparent;color:var(--muted);padding:9px 5px;border-radius:10px;font-size:12px;font-weight:800}.tab.active{background:var(--panel2);color:white}
+    .screen{display:none;padding-top:12px}.screen.active{display:block}.card{background:rgba(17,29,45,.96);border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:12px;box-shadow:var(--shadow)}
+    h2,h3{margin:0 0 10px} h2{font-size:20px}h3{font-size:15px}.muted{color:var(--muted)}.tiny{font-size:12px}.row{display:flex;gap:8px;align-items:center}.wrap{flex-wrap:wrap}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+    input,select,textarea{width:100%;background:#0a1524;border:1px solid var(--line);color:var(--text);border-radius:12px;padding:12px;min-height:44px}textarea{min-height:80px;resize:vertical}.label{display:block;font-size:12px;color:var(--muted);font-weight:750;margin:7px 0 5px}
+    .playerHero{text-align:center;padding:10px 2px 4px}.num{font-size:46px;font-weight:950;line-height:1}.name{font-size:24px;font-weight:900;margin-top:5px}.positionline{font-size:14px;color:var(--muted);margin-top:6px}
+    .navrow{display:grid;grid-template-columns:54px 1fr 54px;gap:8px;margin-bottom:12px}.navrow button{font-size:22px}
+    .sectionTitle{display:flex;align-items:center;gap:8px;margin:14px 0 8px;font-weight:900}.sectionTitle:after{content:"";height:1px;background:var(--line);flex:1}
+    .rating{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.rate{min-height:48px;border-radius:12px;border:1px solid var(--line);background:#0b1726;color:var(--muted);font-weight:850}.rate[data-v="1"].on{background:#481925;border-color:var(--bad);color:white}.rate[data-v="2"].on{background:#493916;border-color:var(--warn);color:white}.rate[data-v="3"].on{background:#153e33;border-color:var(--good);color:white}
+    .traitGrid{display:grid;grid-template-columns:1fr 1fr;gap:7px}.trait{min-height:43px;border:1px solid var(--line);background:#0b1726;color:#c7d2e1;border-radius:11px;font-size:13px;font-weight:750}.trait.on.goodtag{background:#153e33;border-color:var(--good);color:white}.trait.on.badtag{background:#481925;border-color:var(--bad);color:white}.trait.on.neutral{background:#243b5e;border-color:var(--accent);color:white}
+    .projection{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.projection button{min-height:54px;border:1px solid var(--line);border-radius:12px;background:#0b1726;color:var(--muted);font-weight:900}.projection button.on[data-p="Starter"]{background:#153e33;border-color:var(--good);color:white}.projection button.on[data-p="Developing"]{background:#493916;border-color:var(--warn);color:white}.projection button.on[data-p="Depth / Rotation"]{background:#302650;border-color:var(--purple);color:white}
+    .counterGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.counter{border:1px solid var(--line);background:#0b1726;color:white;border-radius:11px;padding:8px 2px}.counter b{display:block;font-size:22px}.counter span{font-size:9px;color:var(--muted);font-weight:800}.counter:active{transform:scale(.97)}
+    .listItem{display:grid;grid-template-columns:50px 1fr auto;gap:10px;align-items:center;padding:11px 5px;border-bottom:1px solid var(--line)}.listItem:last-child{border-bottom:0}.badge{display:inline-block;border-radius:999px;padding:4px 8px;font-size:11px;font-weight:850;background:#23344b;color:#d7e1ef}.badge.starter{background:#174335}.badge.developing{background:#4a3817}.badge.depth{background:#302650}.score{font-size:20px;font-weight:950}.empty{text-align:center;padding:28px 10px;color:var(--muted)}
+    .fabbar{position:fixed;bottom:0;left:0;right:0;z-index:30;background:rgba(8,17,31,.96);backdrop-filter:blur(15px);border-top:1px solid var(--line);padding:9px 12px calc(9px + env(safe-area-inset-bottom))}.fabinner{max-width:736px;margin:auto;display:grid;grid-template-columns:1fr 1.4fr;gap:9px}.next{background:var(--accent);border:0;color:#06111f;border-radius:14px;font-weight:950;font-size:16px}
+    .modal{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.7);display:none;align-items:flex-end}.modal.open{display:flex}.sheet{width:100%;max-height:92vh;overflow:auto;background:#0c1726;border-radius:22px 22px 0 0;padding:18px 14px calc(22px + env(safe-area-inset-bottom));border-top:1px solid var(--line)}.sheet .handle{width:48px;height:5px;background:#41516a;border-radius:99px;margin:0 auto 14px}
+    .progress{height:10px;background:#07101d;border-radius:99px;overflow:hidden;border:1px solid var(--line)}.progress>div{height:100%;width:0;background:var(--accent);transition:width .2s}.ocrPreview{white-space:pre-wrap;background:#07101d;border:1px solid var(--line);border-radius:12px;padding:10px;max-height:190px;overflow:auto;font-size:12px}
+    .toast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%);background:#e8eef7;color:#07101d;padding:10px 14px;border-radius:11px;font-weight:800;z-index:200;opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1}
+    @media(min-width:650px){.traitGrid{grid-template-columns:repeat(3,1fr)}.sheet{max-width:720px;margin:0 auto;border-radius:22px 22px 0 0}}
+  </style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="top"><div><div class="brand">12U Tryout Scout</div><div class="sub" id="saveState">Saved on this device</div></div><div class="grow"></div><button class="iconbtn" onclick="openModal('settingsModal')">⚙︎</button></div>
+  <div class="tabs">
+    <button class="tab active" data-screen="evaluate">Evaluate</button>
+    <button class="tab" data-screen="players">Players</button>
+    <button class="tab" data-screen="rankings">Rankings</button>
+    <button class="tab" data-screen="roster">Roster</button>
+  </div>
+</header>
+
+<section id="evaluate" class="screen active">
+  <div id="noPlayers" class="card empty"><h2>No players loaded</h2><p>Import a roster photo, paste a list, or add a player manually.</p><button class="btn primary" onclick="openModal('importModal')">Import Participant List</button></div>
+  <div id="evalContent" style="display:none">
+    <div class="navrow"><button class="btn" onclick="movePlayer(-1)">‹</button><button class="btn" onclick="jumpPlayer()" id="jumpBtn">Find #</button><button class="btn" onclick="movePlayer(1)">›</button></div>
+    <div class="card playerHero"><div class="num" id="evalNum">#—</div><div class="name" id="evalName">—</div><div class="positionline" id="evalPos">Position not entered</div></div>
+
+    <div class="card">
+      <div class="row"><h2 style="margin:0">Hitting Quick Grade</h2><div class="grow"></div><button class="btn small" onclick="toggleDetail()">More detail</button></div>
+      <div id="hittingRatings"></div>
+      <div class="sectionTitle">Contact results</div>
+      <div class="counterGrid" id="contactCounters"></div>
+      <div class="sectionTitle">Key swing tags</div>
+      <div class="traitGrid" id="hittingTags"></div>
+      <div class="sectionTitle">Projection</div>
+      <div class="projection" id="projectionBtns"></div>
+    </div>
+
+    <div class="card" id="detailCard" style="display:none">
+      <h2>Additional Evaluation</h2>
+      <div class="sectionTitle">Fielding</div><div id="fieldRatings"></div>
+      <div class="sectionTitle">Athletic / IQ / Character</div><div id="intangibleRatings"></div>
+      <div class="sectionTitle">Observation tags</div><div class="traitGrid" id="otherTags"></div>
+      <div class="sectionTitle">Positions</div>
+      <div class="grid2"><select id="primaryPos" onchange="savePosition()"></select><select id="secondaryPos" onchange="savePosition()"></select></div>
+      <div class="grid2" style="margin-top:8px"><select id="bats" onchange="savePosition()"><option value="">Bats?</option><option>Right</option><option>Left</option><option>Switch</option></select><select id="throws" onchange="savePosition()"><option value="">Throws?</option><option>Right</option><option>Left</option></select></div>
+      <label class="label">Coach notes</label><textarea id="notes" placeholder="Tap the microphone on the iPhone keyboard to dictate..." oninput="saveNotes()"></textarea>
+    </div>
+  </div>
+</section>
+
+<section id="players" class="screen">
+  <div class="row" style="margin-bottom:10px"><input id="playerSearch" placeholder="Search name or number" oninput="renderPlayerList()"><button class="btn primary" onclick="openModal('addModal')">＋</button></div>
+  <div class="card" id="playerList"></div>
+</section>
+
+<section id="rankings" class="screen">
+  <div class="card">
+    <div class="grid2"><select id="rankProjection" onchange="renderRankings()"><option value="">All projections</option><option>Starter</option><option>Developing</option><option>Depth / Rotation</option><option>Unranked</option></select><select id="rankPosition" onchange="renderRankings()"></select></div>
+  </div>
+  <div class="card" id="rankingList"></div>
+</section>
+
+<section id="roster" class="screen">
+  <div class="card"><h2>Position Overview</h2><div id="positionSummary"></div></div>
+  <div class="card"><h2>Tryout Progress</h2><div id="progressSummary"></div></div>
+  <div class="grid2"><button class="btn primary" onclick="openModal('importModal')">Import Players</button><button class="btn" onclick="exportCSV()">Export CSV</button></div>
+</section>
+</div>
+
+<div class="fabbar" id="fabbar" style="display:none"><div class="fabinner"><button class="btn" onclick="markRecheck()" id="recheckBtn">☆ Recheck</button><button class="next" onclick="movePlayer(1)">Save & Next Player →</button></div></div>
+
+<div class="modal" id="importModal"><div class="sheet"><div class="handle"></div><div class="row"><h2>Import Participant List</h2><div class="grow"></div><button class="btn small" onclick="closeModal('importModal')">Close</button></div>
+  <p class="muted tiny">Use a clear photo with participant numbers and names. OCR needs an internet connection during scanning.</p>
+  <input type="file" id="rosterImage" accept="image/*" capture="environment" onchange="scanRoster(this)">
+  <div id="ocrStatus" style="display:none;margin-top:12px"><div class="row tiny"><span id="ocrText">Preparing...</span><div class="grow"></div><span id="ocrPct">0%</span></div><div class="progress"><div id="ocrBar"></div></div></div>
+  <label class="label">Review or paste roster</label><textarea id="rosterText" style="min-height:190px" placeholder="12 Ava Johnson&#10;13 Mia Thompson&#10;14 Emma Rodriguez"></textarea>
+  <div class="grid2" style="margin-top:10px"><button class="btn" onclick="parseRosterText(true)">Preview</button><button class="btn primary" onclick="parseRosterText(false)">Add Players</button></div>
+  <div id="importPreview" class="muted tiny" style="margin-top:10px"></div>
+</div></div>
+
+<div class="modal" id="addModal"><div class="sheet"><div class="handle"></div><h2>Add Player</h2><label class="label">Participant number</label><input id="addNumber" inputmode="numeric"><label class="label">Player name</label><input id="addName"><div class="grid2" style="margin-top:12px"><button class="btn" onclick="closeModal('addModal')">Cancel</button><button class="btn primary" onclick="addManualPlayer()">Add</button></div></div></div>
+
+<div class="modal" id="editModal"><div class="sheet"><div class="handle"></div><h2>Edit Player</h2><input type="hidden" id="editId"><label class="label">Participant number</label><input id="editNumber"><label class="label">Player name</label><input id="editName"><div class="grid2" style="margin-top:12px"><button class="btn danger" onclick="deleteEditedPlayer()">Delete</button><button class="btn primary" onclick="saveEditedPlayer()">Save</button></div></div></div>
+
+<div class="modal" id="settingsModal"><div class="sheet"><div class="handle"></div><div class="row"><h2>Data & Settings</h2><div class="grow"></div><button class="btn small" onclick="closeModal('settingsModal')">Close</button></div>
+  <button class="btn" style="width:100%;margin-bottom:9px" onclick="downloadBackup()">Download Backup</button>
+  <label class="btn" style="display:block;text-align:center;margin-bottom:9px">Restore Backup<input type="file" accept="application/json" onchange="restoreBackup(this)" style="display:none"></label>
+  <button class="btn danger" style="width:100%" onclick="clearAllData()">Erase All Tryout Data</button>
+  <p class="muted tiny">Data is stored locally in this browser. Export a backup before changing phones, clearing Safari data, or replacing the app.</p>
+</div></div>
+<div class="toast" id="toast"></div>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<script>
+const POSITIONS=['','P','C','1B','2B','3B','SS','LF','CF','RF','UTIL'];
+const HIT_RATINGS=['Contact Quality','Bat Speed','Barrel Consistency','Timing','Power Potential','Eye Discipline'];
+const FIELD_RATINGS=['Arm Strength','Throw Mechanics','Accuracy','Transfer Speed','Footwork','Catching Ability','Ball Tracking'];
+const INT_RATINGS=['Speed / Athleticism','Softball IQ','Focus','Coachability','Teamwork / Attitude'];
+const HIT_TAGS=[['Fast Hands','goodtag'],['Hands Inside','goodtag'],['Strong Weight Transfer','goodtag'],['Drives Through Ball','goodtag'],['Balanced','goodtag'],['Uses Whole Field','goodtag'],['Drops Hands','badtag'],['Casts Bat','badtag'],['Long Swing','badtag'],['Pulls Head','badtag'],['Steps Out','badtag'],['Spins Off','badtag'],['Lunges','badtag'],['Weak Lower Half','badtag']];
+const OTHER_TAGS=[['Strong Arm','goodtag'],['Quick Transfer','goodtag'],['Soft Hands','goodtag'],['Good First Step','goodtag'],['Tracks Well','goodtag'],['Hustles','goodtag'],['Communicates','goodtag'],['Good Teammate','goodtag'],['Distracted','badtag'],['Negative Body Language','badtag'],['Poor Effort','badtag'],['Low Awareness','badtag'],['Needs Another Look','neutral']];
+const CONTACT=['Miss','Weak','Routine','Hard','Barrel'];
+let state=loadState(); let currentIndex=0; let detailOpen=false; let noteTimer;
+function fresh(){return {players:[],updated:new Date().toISOString()}}
+function loadState(){try{return JSON.parse(localStorage.getItem('tryoutScoutV1'))||fresh()}catch{return fresh()}}
+function save(){state.updated=new Date().toISOString();localStorage.setItem('tryoutScoutV1',JSON.stringify(state));document.getElementById('saveState').textContent='Saved '+new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit'});}
+function makePlayer(number,name){return {id:crypto.randomUUID?crypto.randomUUID():Date.now()+'-'+Math.random(),number:String(number||'').trim(),name:(name||'Unnamed Player').trim(),projection:'',primaryPos:'',secondaryPos:'',bats:'',throws:'',ratings:{},tags:[],contacts:{Miss:0,Weak:0,Routine:0,Hard:0,Barrel:0},notes:'',recheck:false,created:new Date().toISOString(),updated:new Date().toISOString()}}
+function current(){return state.players[currentIndex]}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1300)}
+function openModal(id){document.getElementById(id).classList.add('open')}function closeModal(id){document.getElementById(id).classList.remove('open')}
+function init(){populatePositions();bindTabs();renderAll();if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});}
+function populatePositions(){['primaryPos','secondaryPos','rankPosition'].forEach(id=>{const e=document.getElementById(id);e.innerHTML=(id==='rankPosition'?'<option value="">All positions</option>':'<option value="">'+(id==='primaryPos'?'Primary position':'Secondary position')+'</option>')+POSITIONS.filter(Boolean).map(p=>`<option>${p}</option>`).join('')})}
+function bindTabs(){document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(b.dataset.screen).classList.add('active');document.getElementById('fabbar').style.display=b.dataset.screen==='evaluate'&&state.players.length?'block':'none';renderAll()})}
+function renderAll(){renderEvaluator();renderPlayerList();renderRankings();renderRoster()}
+function renderEvaluator(){const has=state.players.length>0;document.getElementById('noPlayers').style.display=has?'none':'block';document.getElementById('evalContent').style.display=has?'block':'none';document.getElementById('fabbar').style.display=has&&document.getElementById('evaluate').classList.contains('active')?'block':'none';if(!has)return;if(currentIndex>=state.players.length)currentIndex=state.players.length-1;const p=current();document.getElementById('evalNum').textContent='#'+(p.number||'—');document.getElementById('evalName').textContent=p.name;document.getElementById('evalPos').textContent=[p.primaryPos,p.secondaryPos].filter(Boolean).join(' / ')||'Position not entered';document.getElementById('jumpBtn').textContent=`Player ${currentIndex+1} of ${state.players.length}`;renderRatings('hittingRatings',HIT_RATINGS,p);renderRatings('fieldRatings',FIELD_RATINGS,p);renderRatings('intangibleRatings',INT_RATINGS,p);renderTags('hittingTags',HIT_TAGS,p);renderTags('otherTags',OTHER_TAGS,p);renderCounters(p);renderProjection(p);document.getElementById('primaryPos').value=p.primaryPos||'';document.getElementById('secondaryPos').value=p.secondaryPos||'';document.getElementById('bats').value=p.bats||'';document.getElementById('throws').value=p.throws||'';document.getElementById('notes').value=p.notes||'';document.getElementById('recheckBtn').textContent=p.recheck?'★ Recheck':'☆ Recheck';document.getElementById('detailCard').style.display=detailOpen?'block':'none'}
+function renderRatings(container,cats,p){document.getElementById(container).innerHTML=cats.map(cat=>`<div><div class="label">${cat}</div><div class="rating">${[['1','Concern'],['2','Solid'],['3','Plus']].map(([v,l])=>`<button class="rate ${String(p.ratings[cat])===v?'on':''}" data-v="${v}" onclick="setRating('${esc(cat)}',${v})">${l}</button>`).join('')}</div></div>`).join('')}
+function renderTags(container,tags,p){document.getElementById(container).innerHTML=tags.map(([t,c])=>`<button class="trait ${c} ${p.tags.includes(t)?'on':''}" onclick="toggleTag('${esc(t)}')">${t}</button>`).join('')}
+function renderCounters(p){document.getElementById('contactCounters').innerHTML=CONTACT.map(c=>`<button class="counter" onclick="incContact('${c}')" oncontextmenu="event.preventDefault();decContact('${c}')"><b>${p.contacts[c]||0}</b><span>${c.toUpperCase()}</span></button>`).join('')}
+function renderProjection(p){document.getElementById('projectionBtns').innerHTML=['Starter','Developing','Depth / Rotation'].map(x=>`<button data-p="${x}" class="${p.projection===x?'on':''}" onclick="setProjection('${x}')">${x}</button>`).join('')}
+function setRating(cat,v){const p=current();p.ratings[cat]=p.ratings[cat]===v?'':v;p.updated=new Date().toISOString();save();renderEvaluator()}
+function toggleTag(tag){const p=current();p.tags=p.tags.includes(tag)?p.tags.filter(x=>x!==tag):[...p.tags,tag];p.updated=new Date().toISOString();save();renderEvaluator()}
+function incContact(c){current().contacts[c]=(current().contacts[c]||0)+1;save();renderEvaluator()}function decContact(c){current().contacts[c]=Math.max(0,(current().contacts[c]||0)-1);save();renderEvaluator()}
+function setProjection(x){current().projection=current().projection===x?'':x;save();renderEvaluator()}
+function savePosition(){const p=current();p.primaryPos=document.getElementById('primaryPos').value;p.secondaryPos=document.getElementById('secondaryPos').value;p.bats=document.getElementById('bats').value;p.throws=document.getElementById('throws').value;save();renderEvaluator()}
+function saveNotes(){clearTimeout(noteTimer);noteTimer=setTimeout(()=>{current().notes=document.getElementById('notes').value;save()},250)}
+function toggleDetail(){detailOpen=!detailOpen;renderEvaluator();if(detailOpen)setTimeout(()=>document.getElementById('detailCard').scrollIntoView({behavior:'smooth'}),80)}
+function movePlayer(n){if(!state.players.length)return;currentIndex=(currentIndex+n+state.players.length)%state.players.length;detailOpen=false;renderEvaluator();scrollTo({top:0,behavior:'smooth'})}
+function jumpPlayer(){const q=prompt('Enter participant number or part of the name:');if(!q)return;const i=state.players.findIndex(p=>p.number.toLowerCase()===q.toLowerCase()||p.name.toLowerCase().includes(q.toLowerCase()));if(i>=0){currentIndex=i;renderEvaluator()}else toast('Player not found')}
+function markRecheck(){current().recheck=!current().recheck;if(current().recheck&&!current().tags.includes('Needs Another Look'))current().tags.push('Needs Another Look');if(!current().recheck)current().tags=current().tags.filter(x=>x!=='Needs Another Look');save();renderEvaluator()}
+function parseLines(txt){const lines=txt.split(/\n+/).map(x=>x.trim()).filter(Boolean);const out=[];for(const line of lines){let s=line.replace(/[|•]/g,' ').replace(/\s+/g,' ').trim();let m=s.match(/^#?\s*(\d{1,4})\s*[-–:.]?\s+(.{2,})$/);if(m)out.push({number:m[1],name:cleanName(m[2])});else{m=s.match(/^(.{2,}?)\s+[#]?\s*(\d{1,4})$/);if(m)out.push({number:m[2],name:cleanName(m[1])});}}return out.filter(x=>/[A-Za-z]/.test(x.name))}
+function cleanName(s){return s.replace(/[^A-Za-zÀ-ÿ' .-]/g,' ').replace(/\s+/g,' ').trim().replace(/\b\w/g,c=>c.toUpperCase())}
+async function scanRoster(input){const file=input.files[0];if(!file)return;if(!window.Tesseract){toast('OCR library did not load');return}document.getElementById('ocrStatus').style.display='block';try{const r=await Tesseract.recognize(file,'eng',{logger:m=>{if(m.status){document.getElementById('ocrText').textContent=m.status;const pct=Math.round((m.progress||0)*100);document.getElementById('ocrPct').textContent=pct+'%';document.getElementById('ocrBar').style.width=pct+'%'}}});document.getElementById('rosterText').value=r.data.text;parseRosterText(true);toast('Scan complete — review names')}catch(e){toast('Could not scan image');console.error(e)}}
+function parseRosterText(preview){const found=parseLines(document.getElementById('rosterText').value);document.getElementById('importPreview').innerHTML=found.length?`Found <b>${found.length}</b> players: `+found.slice(0,8).map(x=>`#${x.number} ${x.name}`).join(', ')+(found.length>8?'…':''):'No numbered names found. Use one player per line, such as “12 Ava Johnson”.';if(preview||!found.length)return;let added=0;for(const x of found){if(!state.players.some(p=>p.number===x.number)){state.players.push(makePlayer(x.number,x.name));added++}}state.players.sort((a,b)=>(Number(a.number)||9999)-(Number(b.number)||9999));save();closeModal('importModal');renderAll();toast(`${added} players added`)}
+function addManualPlayer(){const n=document.getElementById('addNumber').value.trim(),name=document.getElementById('addName').value.trim();if(!n&&!name){toast('Enter a number or name');return}state.players.push(makePlayer(n,name));save();closeModal('addModal');document.getElementById('addNumber').value='';document.getElementById('addName').value='';renderAll()}
+function scorePlayer(p){const vals=Object.values(p.ratings).map(Number).filter(Boolean);if(!vals.length)return 0;let base=vals.reduce((a,b)=>a+b,0)/vals.length/3*100;const total=Object.values(p.contacts).reduce((a,b)=>a+b,0);if(total){const contact=((total-(p.contacts.Miss||0))/total)*100;const quality=(((p.contacts.Hard||0)+(p.contacts.Barrel||0)*1.3)/total)*35;base=base*.65+contact*.2+quality*.15}if(p.tags.includes('Drops Hands'))base-=6;if(p.tags.includes('Casts Bat'))base-=4;return Math.max(0,Math.min(100,Math.round(base)))}
+function renderPlayerList(){const el=document.getElementById('playerList');if(!el)return;const q=(document.getElementById('playerSearch')?.value||'').toLowerCase();const arr=state.players.filter(p=>(p.name+' '+p.number).toLowerCase().includes(q));el.innerHTML=arr.length?arr.map(p=>playerRow(p,false)).join(''):'<div class="empty">No matching players</div>'}
+function playerRow(p,rank){const cls=p.projection==='Starter'?'starter':p.projection==='Developing'?'developing':p.projection?'depth':'';return `<div class="listItem" onclick="openPlayer('${p.id}')"><div class="score">#${p.number||'—'}</div><div><b>${p.name}</b><div class="tiny muted">${[p.primaryPos,p.secondaryPos].filter(Boolean).join(' / ')||'No position'} ${p.recheck?' • ★ Recheck':''}</div><span class="badge ${cls}">${p.projection||'Unranked'}</span></div><div class="score">${scorePlayer(p)||'—'}</div></div>`}
+function openPlayer(id){const i=state.players.findIndex(p=>p.id===id);if(i<0)return;currentIndex=i;document.querySelector('[data-screen="evaluate"]').click()}
+function editPlayer(id){const p=state.players.find(x=>x.id===id);if(!p)return;document.getElementById('editId').value=id;document.getElementById('editNumber').value=p.number;document.getElementById('editName').value=p.name;openModal('editModal')}
+function saveEditedPlayer(){const p=state.players.find(x=>x.id===document.getElementById('editId').value);if(!p)return;p.number=document.getElementById('editNumber').value.trim();p.name=document.getElementById('editName').value.trim()||'Unnamed Player';save();closeModal('editModal');renderAll()}
+function deleteEditedPlayer(){if(!confirm('Delete this player and all evaluations?'))return;state.players=state.players.filter(x=>x.id!==document.getElementById('editId').value);currentIndex=Math.max(0,Math.min(currentIndex,state.players.length-1));save();closeModal('editModal');renderAll()}
+function renderRankings(){const el=document.getElementById('rankingList');if(!el)return;const proj=document.getElementById('rankProjection').value,pos=document.getElementById('rankPosition').value;let arr=[...state.players].filter(p=>(!proj||(proj==='Unranked'?!p.projection:p.projection===proj))&&(!pos||p.primaryPos===pos||p.secondaryPos===pos));arr.sort((a,b)=>scorePlayer(b)-scorePlayer(a)||a.name.localeCompare(b.name));el.innerHTML=arr.length?arr.map(p=>playerRow(p,true)).join(''):'<div class="empty">No players in this view</div>'}
+function renderRoster(){const pos={};POSITIONS.filter(Boolean).forEach(x=>pos[x]=0);let evaluated=0;state.players.forEach(p=>{if(p.primaryPos)pos[p.primaryPos]++;if(Object.keys(p.ratings).length||p.projection)evaluated++});document.getElementById('positionSummary').innerHTML=Object.entries(pos).map(([k,v])=>`<div class="row" style="padding:7px 0;border-bottom:1px solid var(--line)"><b>${k}</b><div class="grow"></div><span>${v}</span></div>`).join('');const pct=state.players.length?Math.round(evaluated/state.players.length*100):0;document.getElementById('progressSummary').innerHTML=`<div class="row"><b>${evaluated} evaluated</b><div class="grow"></div><span>${state.players.length} total</span></div><div class="progress" style="margin-top:10px"><div style="width:${pct}%"></div></div><p class="muted tiny">${pct}% have at least one grade or projection.</p>`}
+function exportCSV(){const headers=['Number','Name','Projection','Score','Primary Position','Secondary Position','Bats','Throws','Recheck',...HIT_RATINGS,...FIELD_RATINGS,...INT_RATINGS,...CONTACT,'Tags','Notes'];const rows=state.players.map(p=>[p.number,p.name,p.projection,scorePlayer(p),p.primaryPos,p.secondaryPos,p.bats,p.throws,p.recheck?'Yes':'No',...HIT_RATINGS.map(x=>p.ratings[x]||''),...FIELD_RATINGS.map(x=>p.ratings[x]||''),...INT_RATINGS.map(x=>p.ratings[x]||''),...CONTACT.map(x=>p.contacts[x]||0),p.tags.join('; '),p.notes]);downloadFile('tryout-evaluations.csv',[headers,...rows].map(r=>r.map(csv).join(',')).join('\n'),'text/csv')}
+function csv(v){return '"'+String(v??'').replace(/"/g,'""')+'"'}
+function downloadBackup(){downloadFile('tryout-scout-backup.json',JSON.stringify(state,null,2),'application/json')}
+function restoreBackup(input){const f=input.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!Array.isArray(d.players))throw 0;state=d;currentIndex=0;save();closeModal('settingsModal');renderAll();toast('Backup restored')}catch{toast('Invalid backup file')}};r.readAsText(f)}
+function clearAllData(){if(!confirm('Erase every player and evaluation? This cannot be undone without a backup.'))return;state=fresh();currentIndex=0;save();closeModal('settingsModal');renderAll()}
+function downloadFile(name,data,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([data],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+function esc(s){return s.replace(/'/g,"\\'")}
+document.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>
