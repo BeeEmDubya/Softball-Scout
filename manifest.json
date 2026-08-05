@@ -1,7 +1,7 @@
 {
   "name": "Rising Coach",
   "short_name": "Rising Coach",
-  "start_url": "./index.html?v=5501",
+  "start_url": "./index.html?v=5511",
   "display": "standalone",
   "background_color": "#08142f",
   "theme_color": "#08142f",
