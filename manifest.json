@@ -1,12 +1,22 @@
 {
-  "name": "Rising Tryout Scout",
-  "short_name": "Rising Scout",
-  "start_url": "./",
+  "name": "Rising Coach",
+  "short_name": "Rising Coach",
+  "start_url": "./index.html?v=5501",
   "display": "standalone",
-  "background_color": "#0b1530",
-  "theme_color": "#0b1530",
+  "background_color": "#08142f",
+  "theme_color": "#08142f",
   "icons": [
-    {"src":"icon-192.png","sizes":"192x192","type":"image/png"},
-    {"src":"icon-512.png","sizes":"512x512","type":"image/png"}
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
   ]
 }
